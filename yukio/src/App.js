@@ -17,7 +17,9 @@ const App = () => {
   return (
     <div classsName="overflow-hidden">
       <Header setNavMobile={setNavMobile}/>
-      
+      <div className={`${navMobile ? "right-0" : "-right-full"} fixed z-10 top-0 h-full transition-all duration-200`}>
+        <NavMobile setNavMobile={setNavMobile}/>
+        </div> 
     </div>
   );
     
