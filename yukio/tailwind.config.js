@@ -12,6 +12,9 @@ module.exports = {
       primary: "Rubik",
     },
     extend: {
+      flexShrink:{
+        2: '2'
+      },
       colors: {
         black: {
           DEFAULT: "#000000",
