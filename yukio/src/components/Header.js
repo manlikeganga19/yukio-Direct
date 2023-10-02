@@ -1,6 +1,6 @@
 import React from "react";
 import Nav from "./Nav";
-// import AccountBtns from "./AccountBtns";
+import AccountBtns from "./AccountBtns";
 import Logo from "../assests/yukio1.png";
 import { CgMenuRight } from "react-icons/cg";
 
@@ -16,9 +16,10 @@ const Header = ({ setNavMobile }) => {
         <a href="#">
           <img src={Logo} alt="" />
         </a>
+
         <div className="hidden lg:flex gap-x-[55px]">
           <Nav />
-          {/* <AccountBtns/> */}
+          <AccountBtns />
         </div>
         <div
           onClick={() => setNavMobile(true)}
