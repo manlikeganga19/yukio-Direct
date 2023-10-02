@@ -19,7 +19,7 @@ module.exports = {
         black: {
           DEFAULT: "#000000",
           secondary: "#020403",
-          hover: "#020403",
+          hover: "#454545",
         },
         white: {
           DEFAULT: "#ffffff",
