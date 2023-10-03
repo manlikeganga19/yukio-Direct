@@ -7,7 +7,7 @@ import { CgMenuRight } from "react-icons/cg";
 const Header = ({ setNavMobile }) => {
   return (
     <header
-      className="py-[30px] lg:pt-[60px]"
+      className="py-[10px] lg:pt-[30px]"
       data-aos="fade-down"
       data-aos-delay="900"
       data-aos-duration="2000"
