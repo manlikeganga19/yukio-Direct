@@ -8,7 +8,7 @@ const Nav = () => {
                 {navData.map((item, index) => {
                     return (
                         <li className='border-b-2 border-transparent hover:border-black transition-all duration-300' key={index}>
-                            <a href={item.href}>{item.name}</a>
+                            <a href={item.href}>{item.name} {item.dashboard}</a>
                         </li>
                     );
                 })}
