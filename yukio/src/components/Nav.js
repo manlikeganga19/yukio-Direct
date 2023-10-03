@@ -3,7 +3,7 @@ import { navData } from '../data';
 
 const Nav = () => {
     return (
-        <nav className='flex items-center mb-1'>
+        <nav className='flex items-center mb-0'>
             <ul className='flex gap-x-8'>
                 {navData.map((item, index) => {
                     return (
