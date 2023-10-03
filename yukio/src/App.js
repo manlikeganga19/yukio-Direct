@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import RegisterPage from "./pages/Register";
+import LoginPage from "./pages/Login";
 import Header from "./components/Header";
 import NavMobile from "./components/NavMobile";
+
 
 const App = () => {
   const [navMobile, setNavMobile] = useState(false);
@@ -22,6 +26,14 @@ const App = () => {
         } fixed z-10 top-0 h-full transition-all duration-200`}
       >
         <NavMobile setNavMobile={setNavMobile} />
+      </div>
+      <div className="max-w-md w-full space-y-8">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/register" element={<RegisterPage/>}/>
+          </Routes>
+        </BrowserRouter>
       </div>
     </div>
   );
