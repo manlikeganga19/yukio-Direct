@@ -72,14 +72,59 @@ def show_tasks():
 def logout():
   pass
   
-#Create methods
+# Create methods
 @app.route('/dashboard/create_project', methods=['POST'])
 def create_project():
-  pass
+  if request.method == 'POST':
+        # Get data from the request
+        data = request.json  # Assuming data is sent in JSON format
+
+        # Create a new project
+        new_project = Project(
+            title=data['title'],
+            description=data['description'],
+            start_date=data['start_date'],
+            end_date=data['end_date'],
+            owner_id=data['owner_id']  # You might need to set this based on user authentication
+        )
+
+        # Add the new project to the database
+        db.session.add(new_project)
+        db.session.commit()
+
+        return jsonify({"message": "Project created successfully"}, 201)
+  
+  return jsonify({"error": "Invalid request method"}, 405)
+
+  
+
+
+
 
 @app.route('/dashboard/create_task', methods=['POST'])
 def create_task():
-  pass
+   if request.method == 'POST':
+        # Get data from the request
+        data = request.json  # Assuming data is sent in JSON format
+
+        # Create a new task
+        new_task = Task(
+            name=data['name'],
+            description=data['description'],
+            priority=data['priority'],
+            due_date=data['due_date'],
+            project_id=data['project_id']  # You might need to set this based on your project structure
+        )
+
+        # Add the new task to the database
+        db.session.add(new_task)
+        db.session.commit()
+
+        return jsonify({"message": "Task created successfully"}, 201)
+   return jsonify({"error": "Invalid request method"}, 405)
+
+
+
 
 if __name__ == '__main__':
   app.run(port=5555, debug=True)
