@@ -14,6 +14,7 @@ export default function LoginHeader({
                     className="h-14 w-14"
                     src=""/>
             </div> */}
+        
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                 {heading}
             </h2>

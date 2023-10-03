@@ -6,15 +6,16 @@ import { CgMenuRight } from "react-icons/cg";
 
 const Header = ({ setNavMobile }) => {
   return (
+    <>
     <header
-      className="py-[10px] lg:pt-[30px]"
-      data-aos="fade-down"
-      data-aos-delay="900"
-      data-aos-duration="2000"
+      className="py-[5px] lg:pt-[10px] bg-white"
+      // data-aos="fade-down"
+      // data-aos-delay="900"
+      // data-aos-duration="2000"
     >
       <div className="container mx-auto flex items-center justify-between">
         <a href="#">
-          <img src={Logo} alt="" />
+          <img src={Logo} alt="" className="max-w-100" />
         </a>
 
         <div className="hidden lg:flex gap-x-[55px]">
@@ -29,6 +30,8 @@ const Header = ({ setNavMobile }) => {
         </div>
       </div>
     </header>
+    <hr className="border-t border-gray-800"/>
+    </>
   );
 };
 export default Header;
