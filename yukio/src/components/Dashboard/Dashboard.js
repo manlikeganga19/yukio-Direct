@@ -1,9 +1,9 @@
 import React from 'react';
+// import {Link} from 'react-router-dom'
 
 function Dashboard() {
   return (
     <div className="flex h-screen">
-      
       <nav className="bg-black text-white w-1/6 p-4">
         
         <ul>
