@@ -23,7 +23,7 @@
   }
   .input,
   .select {
-    @apply outline-none w-full border-b border-gray text-black-secondary h-[38px] text-xl;
+    @apply outline-none w-full border-b border-black/20 text-black-secondary h-[38px] text-xl;
   }
   .input {
     @apply lg:max-w-[410px] bg-transparent;
