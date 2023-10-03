@@ -5,7 +5,7 @@ export const navData = [
   },
   {
     name: "Dashboard",
-    href: "#",
+    href: "/dashboard",
   },
 ];
 export const Dashboard = [
