@@ -6,7 +6,7 @@ import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import Header from "./components/Header";
 import NavMobile from "./components/NavMobile";
-
+import Logo from "./assests/yukio1.png";
 
 const App = () => {
   const [navMobile, setNavMobile] = useState(false);
@@ -30,6 +30,7 @@ const App = () => {
       <div className="max-w-md w-full space-y-8">
         <BrowserRouter>
           <Routes>
+            <Route path="/home" element={Logo}/>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
           </Routes>
