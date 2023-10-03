@@ -8,3 +8,25 @@ export const navData = [
     href: "#",
   },
 ];
+export const Dashboard = [
+  {
+    Project: "Project",
+    href: "#",
+  },
+  {
+    Task: "Task",
+    href: "#",
+  },
+  {
+    User: "User",
+    href: "#",
+  },
+  {
+    History: "History",
+    href: "#",
+  },
+  {
+    Help: "Help",
+    href: "#",
+  },
+];
