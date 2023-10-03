@@ -7,6 +7,7 @@ import LoginPage from "./pages/Login";
 import Header from "./components/Header";
 import NavMobile from "./components/NavMobile";
 import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
 
 const App = () => {
   const [navMobile, setNavMobile] = useState(false);
@@ -18,7 +19,7 @@ const App = () => {
     });
   });
   return (
-    <div classsName="overflow-hidden">
+    <div className="overflow-hidden">
       <Header setNavMobile={setNavMobile} />
       <div
         className={`${
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard/>}/>
           </Routes>
         </BrowserRouter>
+        <Home />
       </div>
     </div>
   );

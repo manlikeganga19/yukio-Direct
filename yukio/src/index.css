@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply font-primary bg-white text-black-secondary leading-normal;
+    @apply font-primary bg-slate-100 text-black-secondary leading-normal;
   }
   .h3 {
     @apply text-[22px] lg:text-[32px] font-bold;
