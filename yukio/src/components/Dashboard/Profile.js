@@ -1,61 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const Profile = () => {
-  const [completed, setCompleted] = useState(false);
-
-  const handleCheckboxChange = () => {
-    setCompleted(!completed);
-  };
+function Profile({ user, projectsCount, completedProjectsCount, onLogout }) {
+  const initials = user.name
+    .split(' ')
+    .map((namePart) => namePart[0])
+    .join('');
 
   return (
-    <div className="container mx-auto px-4 flex flex-wrap space-y-4 md:space-y-0 md:space-x-4">
-      
-      <div className="flex-1 box-border w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4">
-        <div className="bg-white border border-gray-300 rounded-lg p-4 hover:shadow-md">
-          <h1 className="text-lg font-semibold mb-2">Project Name</h1>
-          <p className="text-gray-600">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          
-          
-          <label className="flex items-center mt-4">
-            <input
-              type="checkbox"
-              className="form-checkbox h-5 w-5 text-blue-500"
-              checked={completed}
-              onChange={handleCheckboxChange}
-            />
-            <span className="ml-2 text-gray-700">Completed</span>
-          </label>
-        </div>
+    <div className="p-4 border rounded-lg text-center">
+      <div className="w-24 h-24 mx-auto rounded-full bg-blue-500 text-white font-bold text-4xl flex items-center justify-center">
+        {initials}
       </div>
-
-      
-      <div className="flex-1 box-border w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4">
-        <div className="bg-white border border-gray-300 rounded-lg p-4 hover:shadow-md">
-          <h1 className="text-lg font-semibold mb-2">Project Name</h1>
-          <p className="text-gray-600">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          
-         
-          <label className="flex items-center mt-4">
-            <input
-              type="checkbox"
-              className="form-checkbox h-5 w-5 text-blue-500"
-              checked={completed}
-              onChange={handleCheckboxChange}
-            />
-            <span className="ml-2 text-gray-700">Completed</span>
-          </label>
-        </div>
-      </div>
-
-      <div className="flex-1 box-border w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4">
-        <div className="bg-white border border-gray-300 rounded-lg p-4 hover:shadow-md">
-          Add Button for adding project
-        </div>
-      </div>
-
-      
+      <h2 className="text-2xl font-semibold mt-4">{user.name}</h2>
+      <p className="text-gray-500 mt-2">
+        {projectsCount} Projects | {completedProjectsCount} Completed
+      </p>
+      <button
+        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none"
+        onClick={onLogout}
+      >
+        Logout
+      </button>
     </div>
   );
-};
+}
 
 export default Profile;
