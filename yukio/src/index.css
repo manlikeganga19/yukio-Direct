@@ -31,4 +31,18 @@
   .select {
     @apply lg:max-w-[200px] cursor-pointer;
   }
+
+}
+
+.wrapper{
+  display: flex;
+  justify-content: center;
+  height: 65vh;
+  padding-top: 50px;
+}
+.try{
+  width: 500px;
+  height: 500px;
+  border: 2px solid black;
+  background-color: red;
 }

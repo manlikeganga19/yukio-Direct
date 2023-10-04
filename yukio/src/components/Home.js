@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <section className="min-h-screen bg-white" data-aos="fade-down">
       <header className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-4xl font-bold mb-4">Yukio PMA</h1>
         <p className="text-center text-gray-600 mb-8">
@@ -13,7 +13,7 @@ const Home = () => {
         </p>
         <a
           href="/register"
-          className="text-blue-500 hover:underline"
+          className="text-white hover:underline btn"
         >
           Try it now 
         </a>
@@ -24,7 +24,7 @@ const Home = () => {
           alt="Meeting"
           className="w-1/2"
         />
-        <div className="ml-8">
+        <div className="ml-8 lg:flex-col ">
           <h2 className="text-2xl font-semibold mb-4">Features</h2>
           <ul className="list-disc pl-4">
             <li className="mb-2">Task Management</li>
@@ -36,7 +36,7 @@ const Home = () => {
         </div>
       </main>
       <Footer />
-    </div>
+   </section>
   );
 };
 
