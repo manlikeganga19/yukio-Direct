@@ -9,9 +9,13 @@ const Home = () => {
     // <Header/>
     <>
       <Header />
-      <section className="min-h-screen bg-white" data-aos="fade-down">
-        <header className="flex flex-col items-center justify-center h-screen">
-          <h1 className="text-4xl font-bold mb-4">Yukio PMA</h1>
+      <section
+        className="section  bg-gray"
+        data-aos="fade-down"
+        data-aos-offset="400"
+      >
+        <header className="flex flex-col items-center justify-center pt-[80px]">
+          <h1 className="section-title">YUKIO PROJECT MANAGER</h1>
           <p className="text-center text-gray-600 mb-8">
             A Powerful Project Management App for Your Needs
           </p>
@@ -19,13 +23,18 @@ const Home = () => {
             Try it now
           </a>
         </header>
-        <main className="flex items-center justify-center mt-16">
+      </section>
+      <section className="section flex items-center justify-center mt-16 bg-white">
+        <div className="flex ">
           <img
             src={Meeting} // Replace with your image source
             alt="Meeting"
-            className="w-1/2"
+            className="w-[500px]"
+            data-aos="fade-right"
+            data-offset="400"
           />
-          <div className="ml-8 lg:flex-col ">
+
+          <div className="ml-80 lg:flex-col pt-[30vh]">
             <h2 className="text-2xl font-semibold mb-4">Features</h2>
             <ul className="list-disc pl-4">
               <li className="mb-2">Task Management</li>
@@ -35,9 +44,9 @@ const Home = () => {
               <li className="mb-2">Real-time Notifications</li>
             </ul>
           </div>
-        </main>
-        <Footer />
+        </div>
       </section>
+      <Footer />
     </>
   );
 };
