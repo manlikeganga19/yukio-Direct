@@ -121,22 +121,29 @@ def create_project():
         return jsonify({"error": "Unauthorized"}), 401
 
 @app.route('/dashboard/create_task', methods=['POST'])
-def create_task():
-    if 'user_id' in session:
-        data = request.json
-        new_task = Task(
-            name=data['name'],
-            description=data['description'],
-            priority=data['priority'],
-            due_date=data['due_date'],
-            project_id=data['project_id'] 
-        )
-        db.session.add(new_task)
-        db.session.commit()
+# def create_task():
+# <<<<<<< ft-newroute
+#    if request.method == 'POST':
+#         # Get data from the request
+#         data = request.json  
 
-        return jsonify({"message": "Task created successfully"}, 201)
-    else:
-        return jsonify({"error": "Unauthorized"}), 401
+# =======
+#     if 'user_id' in session:
+#         data = request.json
+# >>>>>>> main
+#         new_task = Task(
+#             name=data['name'],
+#             description=data['description'],
+#             priority=data['priority'],
+#             due_date=data['due_date'],
+#             project_id=data['project_id'] 
+#         )
+#         db.session.add(new_task)
+#         db.session.commit()
+
+#         return jsonify({"message": "Task created successfully"}, 201)
+#     else:
+#         return jsonify({"error": "Unauthorized"}), 401
     
 @app.route('/dashboard/delete_project/<int:project_id>', methods=['DELETE'])
 def delete_project(project_id):
@@ -167,6 +174,20 @@ def delete_task(task_id):
             return jsonify({"error": "Task not found"}), 404
     else:
         return jsonify({"error": "Unauthorized"}), 401
+
+
+@app.route('/update_project/<int:project_id>', methods=['PUT'])
+def update_project_status(project_id):
+    data = request.json
+    done = data.get('done')
+    project = Project.query.get(project_id)
+    if not project:
+        return jsonify({"error": "Project not found"}), 404
+
+    project.done = done
+    db.session.commit()
+
+    return jsonify({"message": "Project updated successfully", "project": project.to_dict()}), 200
 
 
 if __name__ == '__main__':
