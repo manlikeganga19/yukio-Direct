@@ -15,15 +15,8 @@ api = Api(app)
 
 class Index(Resource):
   def get(self):
-    response_dict ={
-      'index': 'Welcome to Yukio\'s Project Management Application'
-    } 
-    response = make_response(
-      jsonify(response_dict),
-      200
-    )
-    return response
-api.add_response(Index, '/')
+    return 'Welcome to Yukio\'s Project Management Application'
+api.add_resource(Index, '/')
 
 #Authentication
 class Login(Resource):
@@ -96,11 +89,6 @@ def create_project():
   
   return jsonify({"error": "Invalid request method"}, 405)
 
-  
-
-
-
-
 @app.route('/dashboard/create_task', methods=['POST'])
 def create_task():
    if request.method == 'POST':
@@ -122,9 +110,6 @@ def create_task():
 
         return jsonify({"message": "Task created successfully"}, 201)
    return jsonify({"error": "Invalid request method"}, 405)
-
-
-
 
 if __name__ == '__main__':
   app.run(port=5555, debug=True)
