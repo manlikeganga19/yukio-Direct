@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
-import Header from "./components/Header";
-import NavMobile from "./components/NavMobile";
+// import Header from "./components/Header"; 
+// import NavMobile from "./components/NavMobile";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 
 const App = () => {
-  const [navMobile, setNavMobile] = useState(false);
+  // const [navMobile, setNavMobile] = useState(false);
 
   useEffect(() => {
     Aos.init({
@@ -20,23 +20,24 @@ const App = () => {
   });
   return (
     <div className="">
-      <Header setNavMobile={setNavMobile} />
-      <div
+     
+      {/* <Header  /> */}
+      {/* <div
         className={`${
           navMobile ? "right-0" : "-right-full"
         } fixed z-10 top-0 h-full transition-all duration-200`}
       >
         <NavMobile setNavMobile={setNavMobile} />
-      </div>
+      </div> */}
 
-      <BrowserRouter>
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
-      </BrowserRouter>
+    
     </div>
   );
 };

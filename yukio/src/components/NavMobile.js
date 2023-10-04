@@ -6,7 +6,7 @@ const NavMobile = ({ setNavMobile }) => {
   return (
     <nav className="lg:hidden bg-white h-full top-0 bottom-0 w-80 flex justify-center items-center">
       <div
-        onClick={() => setNavMobile(false)}
+        // onClick={() => setNavMobile(false)}
         className="absolute top-2 left-2 cursor-pointer"
       >
         {""}
