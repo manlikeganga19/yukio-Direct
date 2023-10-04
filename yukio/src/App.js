@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import Header from "./components/Header";
@@ -15,11 +15,11 @@ const App = () => {
   useEffect(() => {
     Aos.init({
       duration: 2500,
-      delay: 400,
+      delay: 200,
     });
   });
   return (
-    <div className="overflow-hidden">
+    <div className="">
       <Header setNavMobile={setNavMobile} />
       <div
         className={`${
@@ -28,16 +28,15 @@ const App = () => {
       >
         <NavMobile setNavMobile={setNavMobile} />
       </div>
-      <div className="max-w-md w-full space-y-8">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/register" element={<RegisterPage/>}/>
-            <Route path="/dashboard" element={<Dashboard/>}/>
-          </Routes>
-        </BrowserRouter>
-        <Home />
-      </div>
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };
