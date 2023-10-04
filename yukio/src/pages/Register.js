@@ -5,7 +5,7 @@ import Register from "../components/Register";
 export default function SignupPage() {
   return (
     <div
-      className="flex items-center justify-center h-screen ml-lg:40 wrapper"
+      className="flex items-center justify-center wrapper"
       data-aos="fade-right"
       data-aos-offset="400"
     >
