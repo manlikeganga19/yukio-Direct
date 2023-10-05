@@ -1,4 +1,5 @@
 import React from 'react';
+// import{Link} from "react-router-dom";
 import { navData } from '../data';
 import Footer from './Footer';
 
@@ -25,7 +26,7 @@ const Dashboard = () => {
                     <li>
                         <a href="#">
                             <span class="icon"><i class="fas fa-desktop"></i></span>
-                            <span class="item">profile</span>
+                            <span class="item">Profile</span>
                         </a>
                     </li>
                     <li>
@@ -50,6 +51,9 @@ const Dashboard = () => {
                 </ul>
             </div>
             {/* <!--menu item--> */}
+        </div>
+        <div class="red">
+         we did it!!
         </div>
     
     </div>
