@@ -1,25 +1,14 @@
-import React from 'react';
-import ProfilePage from "../pages/ProfilePage";
-import{Link} from "react-router-dom";
-import { navData } from '../data';
-import Footer from './Footer';
-import TasksPage from '../pages/TasksPage';
-import { NavLink } from 'react-router-dom';
+import React from "react";
 import { useNavigate } from 'react-router-dom';
 
 
-const Dashboard = () => {
+const Tasks = () => {
      const navigate=useNavigate()
 
-     const handleprofileclick=() => {
+     const handleprofileclick = () => {
+       navigate("/profile");
+     };
 
-        navigate("/profile")
-     }
-
-     const handletaskclick = () =>{
-                navigate("/tasks");
-
-     }
     return (
       <div class="wrapper">
         {/* <!--Top menu --> */}
@@ -44,23 +33,19 @@ const Dashboard = () => {
               <li>
                 {/* <Link to="./"> */}
                 <a href="" onClick={handleprofileclick}>
-                  <span class="icon" >
+                  <span class="icon">
                     <i class="fas fa-desktop"></i>
                   </span>
-                  <span class="item" >
-                    Profile
-                  </span>
+                  <span class="item">Profile</span>
                 </a>
                 {/* </Link> */}
               </li>
               <li>
-                <a href="" onClick={handletaskclick}>
+                <a href="">
                   <span class="icon">
                     <i class="fas fa-user-friends"></i>
                   </span>
-                  <span class="item" >
-                    Tasks
-                  </span>
+                  <span class="item">Tasks</span>
                 </a>
               </li>
               <li>
@@ -83,8 +68,10 @@ const Dashboard = () => {
           </div>
           {/* <!--menu item--> */}
         </div>
-       
+        <div class="red">
+            tasks
+        </div>
       </div>
     );
-};
-export default Dashboard;
+} 
+export default Tasks
