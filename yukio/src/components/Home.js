@@ -1,6 +1,5 @@
 import React from "react";
 import Meeting from "../assests/549.jpg";
-import Homebg from "../assests/homebg.jpg";
 import Footer from "./Footer";
 import Header from "../components/Header";
 // import { Link } from 'react-router-dom';
@@ -16,7 +15,6 @@ const Home = () => {
         data-aos-offset="400"
       >
         <header className="flex flex-col items-center justify-center pt-[80px]">
-          {/* <img src={Homebg}/> */}
           <h1 className="section-title">YUKIO PROJECT MANAGER</h1>
           <p className="text-center text-gray-600 mb-8">
             A Powerful Project Management App for Your Needs
