@@ -6,8 +6,10 @@ import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 // import Header from "./components/Header"; 
 // import NavMobile from "./components/NavMobile";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/Dashboard"; 
 import Home from "./components/Home";
+import ProfilePage from "./pages/ProfilePage";
+import TasksPage from "./pages/TasksPage";
 
 const App = () => {
   // const [navMobile, setNavMobile] = useState(false);
@@ -36,6 +38,8 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/tasks" element={<TasksPage />} />
         </Routes>
     
     </div>

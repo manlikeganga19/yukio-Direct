@@ -9,12 +9,15 @@ const Home = () => {
   return (
     // <Header/>
     <>
+    
       <Header />
+      
       <section
         className="section wrap"
         data-aos="fade-down"
         data-aos-offset="400"
       >
+        
         <header className="flex flex-col items-center justify-center pt-[80px]">
           {/* <img src={Homebg}/> */}
           <h1 className="section-title">YUKIO PROJECT MANAGER</h1>
