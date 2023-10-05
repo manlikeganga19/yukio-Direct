@@ -58,6 +58,16 @@
 body {
   background: #f5f6fa;
 }
+.wrap{
+
+  background-image: url(../src/assests/homebg.jpg);
+  height: 100vh;
+}
+.red{
+ background-color: red; 
+ height: 500px;
+ width: 500px;
+}
 
 .wrapper .sidebar {
   background: #000000;
