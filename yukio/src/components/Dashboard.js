@@ -23,6 +23,7 @@ const Dashboard = () => {
      const handleprojectclick = () => {
         navigate("/projects");
      }
+
     return (
       <div class="wrapper">
         {/* <!--Top menu --> */}
@@ -67,7 +68,7 @@ const Dashboard = () => {
                 </a>
               </li>
               <li>
-                <a href="#" onClick={handleprojectclick}>
+                <a href="" onClick={handleprojectclick}>
                   <span class="icon">
                     <i class="fas fa-tachometer-alt"></i>
                   </span>
@@ -75,7 +76,7 @@ const Dashboard = () => {
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="" >
                   <span class="icon-a">
                     <i class="fas fa-tachometer-alt"></i>
                   </span>
@@ -85,6 +86,9 @@ const Dashboard = () => {
             </ul>
           </div>
           {/* <!--menu item--> */}
+        </div>
+        <div class='red'>
+          <p>Welcome to the dashboard</p>
         </div>
        
       </div>

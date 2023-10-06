@@ -19,7 +19,7 @@ class User(db.Model):
   role = db.Column(db.String)
   password = db.Column(db.String, nullable=False)
 
-  projects = relationship("Project",secondary=user_project_association,back_populates="users")
+  projects = db.relationship("Project",secondary=user_project_association,back_populates="users")
 
   def set_password(self, password):
         self.password= generate_password_hash(password)
@@ -49,8 +49,8 @@ class Project(db.Model):
   end_date = db.Column(db.DateTime, onupdate=db.func.now())
   owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-  tasks = relationship("Task", back_populates="project")
-  users = relationship("User",secondary=user_project_association,back_populates="projects")
+  tasks = db.relationship("Task", back_populates="project")
+  users = db.relationship("User",secondary=user_project_association,back_populates="projects")
 
   def to_dict(self):
      return{
@@ -76,7 +76,7 @@ class Task(db.Model):
   due_date = db.Column(db.DateTime, onupdate=db.func.now())
   project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
 
-  project = relationship("Project", back_populates="tasks")
+  project = db.relationship("Project", back_populates="tasks")
 
   def to_dict(self):
      return{

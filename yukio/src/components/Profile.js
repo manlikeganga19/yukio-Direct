@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 
 
-const Profile = () => {
+const Profile = ({projectsCount, completedProjectsCount, }) => {
     const navigate=useNavigate()
       const handleprojectclick = () => {
         navigate("/Projects")
@@ -73,7 +73,21 @@ const Profile = () => {
         {/* <!--menu item--> */}
       </div>
       <div class="red">
-            profile
+      <div className="p-4 border rounded-lg text-center">
+      <div className="w-24 h-24 mx-auto rounded-full bg-blue-500 text-white font-bold text-4xl flex items-center justify-center">
+        T
+      </div>
+      <h2 className="text-2xl font-semibold mt-4">Name</h2>
+      <p className="text-gray-500 mt-2">
+        {projectsCount} Projects | {completedProjectsCount} Completed
+      </p>
+      <button
+        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none"
+        
+      >
+        Logout
+      </button>
+    </div>
       </div>
     </div>
   );

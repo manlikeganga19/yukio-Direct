@@ -77,81 +77,78 @@ class RegisterUser(Resource):
 api.add_resource(RegisterUser, '/register')
 
 # Routes for dashboard navbar
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' in session:
-        return redirect(url_for('/dashboard'))
-    else:
-        return redirect(url_for('/login'))
-
-@app.route('/dashboard/projects')
-def show_projects():
-    if 'user_id' in session:
-        user = User.query.get(session['user_id'])
-        if user:
-            projects = user.projects
-            response_dict = [project.to_dict() for project in projects]
-            return jsonify(response_dict), 200
+class Dashboard(Resource):
+    def dashboard(self):
+        if 'user_id' in session:
+            return redirect(url_for('/dashboard'))
         else:
-            return jsonify({"error": "User not found"}), 404
-    else:
-        return jsonify({"error": "Unauthorized"}), 401
+            return redirect(url_for('/login'))
+api.add_resource(Dashboard, '/dashboard')
 
-@app.route('/dashboard/tasks')
-def show_tasks():
-    if 'user_id' in session:
-        user = User.query.get(session['user_id'])
-        if user:
-            tasks = Task.query.filter(Task.project_id.in_([p.id for p in user.projects])).all()
-            response_dict = [task.to_dict() for task in tasks]
-            return jsonify(response_dict), 200
+class TaskList(Resource):
+    def get(self):
+        if 'user_id' in session:
+            user = User.query.get(session['user_id'])
+            if user:
+                tasks = Task.query.filter(Task.project_id.in_([p.id for p in user.projects])).all()
+                serialize_tasks = [task.to_dict() for task in tasks]
+                return jsonify(serialize_tasks), 200
+            else:
+                return jsonify({"error": "User not found"}), 404
         else:
-            return jsonify({"error": "User not found"}), 404
-    else:
-        return jsonify({"error": "Unauthorized"}), 401
+            return jsonify({"error": "Unauthorized"}), 401
 
+    def post(self):
+        if 'user_id' in session:
+            data = request.json
+            project_id = data.get('project_id')
+            if project_id is None:
+                return jsonify({"error": "Missing project_id in request data"}), 400
 
-# Create methods
-@app.route('/dashboard/create_project', methods=['POST'])
-def create_project():
-    if 'user_id' in session:
-        data = request.json  
-        new_project = Project(
-            title=data['title'],
-            description=data['description'],
-            start_date=data['start_date'],
-            end_date=data['end_date'],
-            owner_id=session['user_id'] 
-        )
-        db.session.add(new_project)
-        db.session.commit()
+            new_task = Task(
+                name=data['name'],
+                description=data['description'],
+                priority=data['priority'],
+                due_date=data['due_date'],
+                project_id=project_id
+            )
+            db.session.add(new_task)
+            db.session.commit()
+            return jsonify({"message": "Task created successfully"}, 201)
+        else:
+            return jsonify({"error": "Unauthorized"}), 401
+api.add_resource(TaskList, '/dashboard/tasks')
 
-        return jsonify({"message": "Project created successfully"}, 201)
-    else:
-        return jsonify({"error": "Unauthorized"}), 401
+class ProjectList(Resource):
+    def get(self):
+        if 'user_id' in session:
+            user = User.query.get(session['user_id'])
+            if user:
+                projects = user.projects
+                serialize_projects = [project.to_dict() for project in projects]
+                return jsonify(serialize_projects), 200
+            else:
+                return jsonify({"error": "User not found"}), 404
+        else:
+            return jsonify({"error": "Unauthorized"}), 401
 
-@app.route('/dashboard/create_task', methods=['POST'])
-def create_task():
-    if 'user_id' in session:
-        data = request.json
-        project_id = data.get('project_id') 
-        if project_id is None:
-            return jsonify({"error": "Missing project_id in request data"}), 400
-        
-        data = request.json  
-        new_task = Task(
-            name=data['name'],
-            description=data['description'],
-            priority=data['priority'],
-            due_date=data['due_date'],
-            project_id=project_id
-        )
-        db.session.add(new_task)
-        db.session.commit()
+    def post(self):
+        if 'user_id' in session:
+            data = request.json
+            new_project = Project(
+                title=data['title'],
+                description=data['description'],
+                start_date=data['start_date'],
+                end_date=data['end_date'],
+                owner_id=session['user_id']
+            )
+            db.session.add(new_project)
+            db.session.commit()
+            return jsonify({"message": "Project created successfully"}, 201)
+        else:
+            return jsonify({"error": "Unauthorized"}), 401
+api.add_resource(ProjectList, '/dashboard/projects')
 
-        return jsonify({"message": "Project created successfully"}, 201)
-    else:
-        return jsonify({"error": "Unauthorized"}), 401
 
 
 @app.route('/dashboard/delete_project/<int:project_id>', methods=['DELETE'])
