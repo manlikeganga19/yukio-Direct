@@ -80,7 +80,7 @@ api.add_resource(RegisterUser, '/register')
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('/dashboard'))
     else:
         return redirect(url_for('/login'))
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 import { loginFields } from "../constants/formFields";
 import FormAction from "./FormAction";
 import FormExtra from "./FormExtra";
@@ -9,6 +10,7 @@ let fieldsState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
+  const navigate = useNavigate()
   const [loginState, setLoginState] = useState(fieldsState);
 
   const handleChange = (e) => {
@@ -22,8 +24,29 @@ export default function Login() {
 
   //Handle Login API Integration here
   const authenticateUser = () => {
+    fetch('/login',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(),
+    })
+    .then((res) =>{
+      if(res.ok){
+        res.json()
+        .then(user =>{ console.log(`this ${user} exists`)
+        if(user.error){
+          alert('User not found')
+        }else{
+          navigate('/dashboard')
+        }
+      })
+        
+      }
+    })
     
   };
+
 
   return (
     <form className="mt-8 space-y-6 justify-center items-center" onSubmit={handleSubmit}>

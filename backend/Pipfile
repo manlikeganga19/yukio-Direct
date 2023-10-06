@@ -14,6 +14,7 @@ importlib-resources = "*"
 ipdb = "*"
 marshmallow = "*"
 sqlalchemy-serializer = "*"
+honcho = "*"
 
 [dev-packages]
 
