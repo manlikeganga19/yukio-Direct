@@ -316,7 +316,7 @@ const Project = () => {
                     <div class="project-box-wrapper">
                         <div class="project-box" >
                             <div class="project-box-header">
-                                {/* <span>December 10, 2020</span> */}
+                                <span>December 10, 2020</span>
                                 
                                 <div class="more-wrapper">
                                     <button class="project-btn-more">
