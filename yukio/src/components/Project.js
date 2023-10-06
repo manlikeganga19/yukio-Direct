@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 const Project = () => {
     const navigate=useNavigate()
-    //  const handleprofileclick = () => {
-    //     navigate("/Profile");
-    //  }     
+     const handleprofileclick = () => {
+        navigate("/Profile");
+     }     
 
      const handletasksclick = () =>{
                 navigate("/tasks");
@@ -34,7 +34,7 @@ const Project = () => {
               </li>
               <li>
                 {/* <Link to="./"> */}
-                <a href="" >
+                <a href="" onClick={handleprofileclick}>
                   <span class="icon">
                     <i class="fas fa-desktop"></i>
                   </span>
