@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Tasks = () => {
      const navigate=useNavigate()
+     const handleprojectclick = () => {}
+        navigate("/projects")
 
      const handleprofileclick = () => {
        navigate("/profile");
@@ -41,15 +43,15 @@ const Tasks = () => {
                 {/* </Link> */}
               </li>
               <li>
-                <a href="">
-                  <span class="icon">
+                <a href="" >
+                  <span class="icon" >
                     <i class="fas fa-user-friends"></i>
                   </span>
                   <span class="item">Tasks</span>
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="#" onClick={handleprojectclick}>
                   <span class="icon">
                     <i class="fas fa-tachometer-alt"></i>
                   </span>

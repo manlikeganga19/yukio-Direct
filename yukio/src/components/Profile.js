@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const navigate=useNavigate()
-
+      const handleprojectclick = () => {
+        navigate("/Projects")
+      }
      
 
      const handletasksclick = () =>{
@@ -51,7 +53,7 @@ const Profile = () => {
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="" onClick={handleprojectclick}>
                 <span class="icon">
                   <i class="fas fa-tachometer-alt"></i>
                 </span>

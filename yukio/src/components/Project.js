@@ -1,27 +1,15 @@
-import React from 'react';
-import ProfilePage from "../pages/ProfilePage";
-import{Link} from "react-router-dom";
-import { navData } from '../data';
-import Footer from './Footer';
-import TasksPage from '../pages/TasksPage';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
+const Project = () => {
+    const navigate=useNavigate()
+    //  const handleprofileclick = () => {
+    //     navigate("/Profile");
+    //  }     
 
-const Dashboard = () => {
-     const navigate=useNavigate()
+     const handletasksclick = () =>{
+                navigate("/tasks");
 
-     const handleprofileclick=() => {
-
-        navigate("/profile")
-     }
-
-     const handletaskclick = () =>{
-        navigate("/tasks");
-
-     }
-     const handleprojectclick = () => {
-        navigate("/projects");
      }
     return (
       <div class="wrapper">
@@ -46,28 +34,24 @@ const Dashboard = () => {
               </li>
               <li>
                 {/* <Link to="./"> */}
-                <a href="" onClick={handleprofileclick}>
-                  <span class="icon" >
+                <a href="" >
+                  <span class="icon">
                     <i class="fas fa-desktop"></i>
                   </span>
-                  <span class="item" >
-                    Profile
-                  </span>
+                  <span class="item">Profile</span>
                 </a>
                 {/* </Link> */}
               </li>
               <li>
-                <a href="" onClick={handletaskclick}>
+                <a href="" onClick={handletasksclick}>
                   <span class="icon">
                     <i class="fas fa-user-friends"></i>
                   </span>
-                  <span class="item" >
-                    Tasks
-                  </span>
+                  <span class="item">Tasks</span>
                 </a>
               </li>
               <li>
-                <a href="#" onClick={handleprojectclick}>
+                <a href="#">
                   <span class="icon">
                     <i class="fas fa-tachometer-alt"></i>
                   </span>
@@ -86,8 +70,8 @@ const Dashboard = () => {
           </div>
           {/* <!--menu item--> */}
         </div>
-       
+        <div class="red">Project</div>
       </div>
     );
-};
-export default Dashboard;
+}
+export default Project;

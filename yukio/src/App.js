@@ -9,6 +9,7 @@ import LoginPage from "./pages/Login";
 import Dashboard from "./components/Dashboard"; 
 import Home from "./components/Home";
 import ProfilePage from "./pages/ProfilePage";
+import ProjectPage from "./pages/ProjectsPage";
 import TasksPage from "./pages/TasksPage";
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/Projects" element={<ProjectPage/>}/>
         </Routes>
     
     </div>
