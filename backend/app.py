@@ -121,6 +121,24 @@ def create_project():
         return jsonify({"error": "Unauthorized"}), 401
 
 @app.route('/dashboard/create_task', methods=['POST'])
+def create_task():
+    if 'user_id' in session:
+        data = request.json  
+        new_task = Task(
+            name=data['name'],
+            description=data['description'],
+            priority=data['priority'],
+            due_date=data['due_date'],
+            project_id=session['project_id'] 
+        )
+        db.session.add(new_task)
+        db.session.commit()
+
+        return jsonify({"message": "Project created successfully"}, 201)
+    else:
+        return jsonify({"error": "Unauthorized"}), 401
+
+# @app.route('/dashboard/create_task', methods=['POST'])
 # def create_task():
 # <<<<<<< ft-newroute
 #    if request.method == 'POST':
@@ -144,7 +162,7 @@ def create_project():
 #         return jsonify({"message": "Task created successfully"}, 201)
 #     else:
 #         return jsonify({"error": "Unauthorized"}), 401
-    
+
 @app.route('/dashboard/delete_project/<int:project_id>', methods=['DELETE'])
 def delete_project(project_id):
     if 'user_id' in session:
