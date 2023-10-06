@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { signupFields } from "../constants/formFields"
 import FormAction from "./FormAction";
 import Input from "./Input";
+import { useNavigate } from 'react-router-dom';
+
 
 const fields=signupFields;
 let fieldsState={};
@@ -9,6 +11,7 @@ let fieldsState={};
 fields.forEach(field => fieldsState[field.id]='');
 
 export default function Signup(){
+  const navigate = useNavigate()
   const [signupState,setSignupState]=useState(fieldsState);
 
   const handleChange=(e)=>setSignupState({...signupState,[e.target.id]:e.target.value});
@@ -21,6 +24,25 @@ export default function Signup(){
 
   //handle Signup API Integration here
   const createAccount=()=>{
+    fetch('/register',{
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify()
+    })
+    .then((res)=>{
+      if(res.ok){
+        res.json()
+        .then((user)=>{ console.log(`${user} has been created.`)
+        if(user.error){
+          alert('This user already exists')
+        } else {
+          navigate('/dashboard')
+        }
+      })
+      }
+    })
     
   }
 
