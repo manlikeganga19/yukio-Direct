@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-
+import TaskManager from './TaskManager'
 
 const Tasks = () => {
      const navigate=useNavigate()
@@ -71,7 +71,7 @@ const Tasks = () => {
           {/* <!--menu item--> */}
         </div>
         <div class="red">
-            tasks
+            <TaskManager/>
         </div>
       </div>
     );
