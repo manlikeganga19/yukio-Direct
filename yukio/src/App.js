@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     Aos.init({
       duration: 2500,
-      delay: 200,
+      delay: 100,
     });
   });
   return (
