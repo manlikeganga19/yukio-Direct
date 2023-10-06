@@ -80,9 +80,9 @@ api.add_resource(RegisterUser, '/register')
 class Dashboard(Resource):
     def dashboard(self):
         if 'user_id' in session:
-            return redirect(url_for('/dashboard'))
+            return redirect(url_for('dashboard'))
         else:
-            return redirect(url_for('/login'))
+            return redirect(url_for('login'))
 api.add_resource(Dashboard, '/dashboard')
 
 class TaskList(Resource):
@@ -150,51 +150,55 @@ class ProjectList(Resource):
 api.add_resource(ProjectList, '/dashboard/projects')
 
 
-
-@app.route('/dashboard/delete_project/<int:project_id>', methods=['DELETE'])
-def delete_project(project_id):
-    if 'user_id' in session:
-        project = Project.query.get(project_id)
-        if project:
-            if project.owner_id == session['user_id']:
-                db.session.delete(project)
-                db.session.commit()
-                return jsonify({"message": "Project deleted successfully"}), 200
+class DeleteProject(Resource):
+    def delete_project(self, project_id):
+        if 'user_id' in session:
+            project = Project.query.get(project_id)
+            if project:
+                if project.owner_id == session['user_id']:
+                    db.session.delete(project)
+                    db.session.commit()
+                    return jsonify({"message": "Project deleted successfully"}), 200
+                else:
+                    return jsonify({"error": "You don't have permission to delete this project"}), 403
             else:
-                return jsonify({"error": "You don't have permission to delete this project"}), 403
+                return jsonify({"error": "Project not found"}), 404
         else:
+            return jsonify({"error": "Unauthorized"}), 401
+api.add_resource(DeleteProject, '/dashboard/delete_project/<int:project_id>')
+
+
+class DeleteTask(Resource):
+    def delete_task(self,task_id):
+        if 'user_id' in session:
+            task = Task.query.get(task_id)
+            if task:
+                db.session.delete(task)
+                db.session.commit()
+                return jsonify({"message": "Task deleted successfully"}), 200
+            else:
+                return jsonify({"error": "Task not found"}), 404
+        else:
+            return jsonify({"error": "Unauthorized"}), 401
+api.add_resource(DeleteTask, '/dashboard/delete_task/<int:task_id>')
+
+class UpdateProject(Resource):
+    def update_project_status(self, project_id):
+        data = request.json
+        status = data.get('status')
+        project = Project.query.get(project_id)
+        if not project:
             return jsonify({"error": "Project not found"}), 404
-    else:
-        return jsonify({"error": "Unauthorized"}), 401
 
-#Delete methods
-@app.route('/dashboard/delete_task/<int:task_id>', methods=['DELETE'])
-def delete_task(task_id):
-    if 'user_id' in session:
-        task = Task.query.get(task_id)
-        if task:
-            db.session.delete(task)
-            db.session.commit()
-            return jsonify({"message": "Task deleted successfully"}), 200
-        else:
-            return jsonify({"error": "Task not found"}), 404
-    else:
-        return jsonify({"error": "Unauthorized"}), 401
+        project.status = status
+        db.session.commit()
 
+        return jsonify({"message": "Project updated successfully", "project": project.to_dict()}), 200
 
-@app.route('/update_project/<int:project_id>', methods=['PUT'])
-def update_project_status(project_id):
-    data = request.json
-    status = data.get('status')
-    project = Project.query.get(project_id)
-    if not project:
-        return jsonify({"error": "Project not found"}), 404
-
-    project.status = status
-    db.session.commit()
-
-    return jsonify({"message": "Project updated successfully", "project": project.to_dict()}), 200
+api.add_resource(UpdateProject, '/update_project/<int:project_id>')
 
 
 if __name__ == '__main__':
   app.run(port=5555, debug=True)
+  api.add_resource(Dashboard, '/dashboard')
+  api.add_resource(Login, '/login')

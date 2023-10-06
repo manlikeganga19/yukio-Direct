@@ -29,7 +29,7 @@ export default function Login() {
       headers:{
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(),
+      body: JSON.stringify(loginState),
     })
     .then((res) =>{
       if(res.ok){
@@ -40,8 +40,7 @@ export default function Login() {
         }else{
           navigate('/dashboard')
         }
-      })
-        
+      }) 
       }
     })
     

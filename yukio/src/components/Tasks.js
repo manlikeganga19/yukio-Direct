@@ -1,9 +1,11 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import TaskManager from './TaskManager'
+import { useEffect, useState } from "react";
 
 const Tasks = () => {
      const navigate=useNavigate()
+     const [taskdata, setTaskData] = useState([])
      const handleprojectclick = () => {}
         navigate("/projects")
 
@@ -11,6 +13,20 @@ const Tasks = () => {
        navigate("/profile");
      };
 
+     const displayTasks = () =>{
+      fetch('/dashboard/tasks') 
+        .then((response) => response.json())
+        .then((data) => {
+          setTaskData(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    };
+    useEffect(() => {
+      displayTasks();
+    }, []);
+     
 
     return (
       <div class="wrapper">
@@ -72,7 +88,7 @@ const Tasks = () => {
           {/* <!--menu item--> */}
         </div>
         <div class="red">
-            <TaskManager />
+            <TaskManager taskData={taskdata}/>
         </div>
       </div>
     );

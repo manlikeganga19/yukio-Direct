@@ -13,6 +13,24 @@ const Profile = ({projectsCount, completedProjectsCount, }) => {
                 navigate("/tasks");
 
      }
+     const handleLogout = () => {
+      fetch('/logout', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            navigate("/login"); 
+          } else {
+            console.error('Logout failed');
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    };
   return (
     <div class="wrapper">
       {/* <!--Top menu --> */}
@@ -83,7 +101,7 @@ const Profile = ({projectsCount, completedProjectsCount, }) => {
       </p>
       <button
         className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none"
-        
+        oncClick={handleLogout}
       >
         Logout
       </button>
