@@ -10,7 +10,7 @@ function Project({ project, tasks, onDeleteProject }) {
   const handleDeleteClick = () => {
     // Send a DELETE request to your backend to delete the project
     // You should replace '/your_backend_project_endpoint' with the actual endpoint
-    fetch(`/your_backend_project_endpoint/${project.id}`, {
+    fetch(`/dashboard/projects/${project.id}`, {
       method: 'DELETE',
     })
       .then((response) => response.json())
@@ -28,13 +28,13 @@ function Project({ project, tasks, onDeleteProject }) {
   return (
     <div className="border rounded p-4 mb-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold">{project.title}</h2>
+        <h2 className="text-lg font-semibold">Title</h2>
         <label className="cursor-pointer">
-          <input type="checkbox" checked={project.done} readOnly />
+          <input type="checkbox"  readOnly />
           <span className="ml-2">Completed?</span>
         </label>
       </div>
-      <p className="text-gray-500">{project.description}</p>
+      <p className="text-gray-500">Description</p>
       <button
         className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
         onClick={handleToggleDetails}

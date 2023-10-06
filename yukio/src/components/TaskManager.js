@@ -20,6 +20,7 @@ function TaskManager() {
     setDeadline(e.target.value);
   };
 
+
   const handleAddTask = () => {
     if (task.trim() === "" || deadline === "") {
       alert("Please select an upcoming date for the deadline.");

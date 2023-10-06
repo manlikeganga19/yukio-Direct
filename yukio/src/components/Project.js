@@ -11,6 +11,7 @@ const Project = () => {
                 navigate("/tasks");
 
      }
+     
     return (
       <div class="wrapper">
         {/* <!--Top menu --> */}
@@ -18,11 +19,11 @@ const Project = () => {
           {/* <!--profile image & text--> */}
           <div class="profile">
             <img
-              src="https://1.bp.blogspot.com/-vhmWFWO2r8U/YLjr2A57toI/AAAAAAAACO4/0GBonlEZPmAiQW4uvkCTm5LvlJVd_-l_wCNcBGAsYHQ/s16000/team-1-2.jpg"
+              src=""
               alt="profile_picture"
             />
-            <h3>Daniel Orwenjo</h3>
-            <p>Software engineer</p>
+            <h3></h3>
+            <p></p>
             <ul>
               <li>
                 <a href="/" class="active">

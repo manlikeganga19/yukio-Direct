@@ -11,6 +11,7 @@ const Tasks = () => {
        navigate("/profile");
      };
 
+
     return (
       <div class="wrapper">
         {/* <!--Top menu --> */}
@@ -71,7 +72,7 @@ const Tasks = () => {
           {/* <!--menu item--> */}
         </div>
         <div class="red">
-            <TaskManager/>
+            <TaskManager />
         </div>
       </div>
     );
