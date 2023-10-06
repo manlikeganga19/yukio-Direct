@@ -32,44 +32,47 @@ class Login(Resource):
 
         if user and user.check_password(password):
             session['user_id'] = user.id
-            return jsonify({"message": "Logged in successfully"}), 200
+            return make_response(jsonify(user.to_dict()), 201)
         else:
             return jsonify({"error": "Invalid credentials"}), 401
 api.add_resource(Login, '/login')
 
 class StayLogged(Resource):
   def get(self):
-        if 'user_id' in session:
-            return jsonify({"message": "User is logged in"}), 200
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return jsonify(user.to_dict()), 200
         else:
-            return jsonify({"error": "User is not logged in"}), 401
+            return jsonify({"error": "User is not logged in"}), 401     
 api.add_resource(StayLogged, '/stay_logged')
 
 class Logout(Resource):
-    def get(self):
+    def delete(self):
         if 'user_id' in session:
             session.pop('user_id')
-            return jsonify({"message": "Logged out successfully"}), 200
+            return  {}, 204
         else:
             return jsonify({"error": "User is not logged in"}), 401
 api.add_resource(Logout, '/logout')
 
 class RegisterUser(Resource):
     def post(self):
-        data = request.json
-        username = data.get('username')
-        password = data.get('password')
+        data = request.get_json()
+        username = data['username']
+        password = data['password']
+        email_address = data['email_address']
 
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
             return jsonify({"error": "Username already exists"}), 400
         
-        new_user = User(username=username)
+        new_user = User(username=username,email_address=email_address)
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
-
-        return jsonify({"message": "User registered successfully"}), 201
+        
+        session['user_id'] = new_user.id
+        return make_response(jsonify(new_user.to_dict()), 201)
 
 api.add_resource(RegisterUser, '/register')
 
@@ -77,29 +80,36 @@ api.add_resource(RegisterUser, '/register')
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
-        return redirect(url_for('/dashboard'))
+        return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('/login'))
 
 @app.route('/dashboard/projects')
 def show_projects():
     if 'user_id' in session:
-        projects = Project.query.all()
-        response_dict = [project.to_dict() for project in projects]
-        response = make_response(jsonify(response_dict), 200)
-        return response
+        user = User.query.get(session['user_id'])
+        if user:
+            projects = user.projects
+            response_dict = [project.to_dict() for project in projects]
+            return jsonify(response_dict), 200
+        else:
+            return jsonify({"error": "User not found"}), 404
     else:
         return jsonify({"error": "Unauthorized"}), 401
 
 @app.route('/dashboard/tasks')
 def show_tasks():
     if 'user_id' in session:
-        tasks = Task.query.all()
-        response_dict = [task.to_dict() for task in tasks]
-        response = make_response(jsonify(response_dict), 200)
-        return response
+        user = User.query.get(session['user_id'])
+        if user:
+            tasks = Task.query.filter(Task.project_id.in_([p.id for p in user.projects])).all()
+            response_dict = [task.to_dict() for task in tasks]
+            return jsonify(response_dict), 200
+        else:
+            return jsonify({"error": "User not found"}), 404
     else:
         return jsonify({"error": "Unauthorized"}), 401
+
 
 # Create methods
 @app.route('/dashboard/create_project', methods=['POST'])
@@ -123,13 +133,18 @@ def create_project():
 @app.route('/dashboard/create_task', methods=['POST'])
 def create_task():
     if 'user_id' in session:
+        data = request.json
+        project_id = data.get('project_id') 
+        if project_id is None:
+            return jsonify({"error": "Missing project_id in request data"}), 400
+        
         data = request.json  
         new_task = Task(
             name=data['name'],
             description=data['description'],
             priority=data['priority'],
             due_date=data['due_date'],
-            project_id=session['project_id'] 
+            project_id=project_id
         )
         db.session.add(new_task)
         db.session.commit()
@@ -138,30 +153,6 @@ def create_task():
     else:
         return jsonify({"error": "Unauthorized"}), 401
 
-# @app.route('/dashboard/create_task', methods=['POST'])
-# def create_task():
-# <<<<<<< ft-newroute
-#    if request.method == 'POST':
-#         # Get data from the request
-#         data = request.json  
-
-# =======
-#     if 'user_id' in session:
-#         data = request.json
-# >>>>>>> main
-#         new_task = Task(
-#             name=data['name'],
-#             description=data['description'],
-#             priority=data['priority'],
-#             due_date=data['due_date'],
-#             project_id=data['project_id'] 
-#         )
-#         db.session.add(new_task)
-#         db.session.commit()
-
-#         return jsonify({"message": "Task created successfully"}, 201)
-#     else:
-#         return jsonify({"error": "Unauthorized"}), 401
 
 @app.route('/dashboard/delete_project/<int:project_id>', methods=['DELETE'])
 def delete_project(project_id):
@@ -197,12 +188,12 @@ def delete_task(task_id):
 @app.route('/update_project/<int:project_id>', methods=['PUT'])
 def update_project_status(project_id):
     data = request.json
-    done = data.get('done')
+    status = data.get('status')
     project = Project.query.get(project_id)
     if not project:
         return jsonify({"error": "Project not found"}), 404
 
-    project.done = done
+    project.status = status
     db.session.commit()
 
     return jsonify({"message": "Project updated successfully", "project": project.to_dict()}), 200
