@@ -24,26 +24,28 @@ export default function Signup(){
 
   //handle Signup API Integration here
   const createAccount=()=>{
-    fetch('/register',{
-      method: 'POST',
-      headers:{
-        "Content-Type": "application/json",
-      },
-      body:JSON.stringify()
-    })
-    .then((res)=>{
-      if(res.ok){
-        res.json()
-        .then((user)=>{ console.log(`${user} has been created.`)
-        if(user.error){
-          alert('This user already exists')
+      fetch('/register', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signupState) 
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json(); 
         } else {
-          navigate('/dashboard')
+          throw new Error('Failed to create account');
         }
       })
-      }
-    })
-    
+      .then((user) => {
+        console.log(`${user} has been created.`);
+        if (user.error) {
+          alert('This user already exists');
+        } else {
+          navigate('/dashboard'); 
+        }
+      })
   }
 
     return(

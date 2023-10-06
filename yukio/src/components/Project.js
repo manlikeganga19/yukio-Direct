@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Project = () => {
     const navigate=useNavigate()
+    const [projectData, setProjectData] = useState([]);
      const handleprofileclick = () => {
         navigate("/Profile");
      }     
@@ -11,6 +13,20 @@ const Project = () => {
                 navigate("/tasks");
 
      }
+     const handleDisplay = ()=>{
+        fetch('/dashboard/projects') 
+        .then((response) => response.json())
+        .then((data) => {
+          setProjectData(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    };
+    useEffect(() => {
+      handleDisplay();
+    }, []);
+     
      
     return (
       <div class="wrapper">
@@ -122,7 +138,8 @@ const Project = () => {
                     </div>
                 </div>
                 <div class="project-boxes jsGridView">
-                    <div class="project-box-wrapper">
+                    <div class="project-box-wrapper"> 
+                    {/* map Projectdata */}
                         <div class="project-box" >
                             <div class="project-box-header">
                                 <span>December 10, 2020</span>
