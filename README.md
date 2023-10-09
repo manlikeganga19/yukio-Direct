@@ -7,6 +7,7 @@ This project was created by;
   2. Elsie Oduor
   3. Ian Odhiambo
   4. Adrian Were
+  5. Wambui Karanja
 
 ## Table of Contents
 - Features
