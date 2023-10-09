@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from collections import defaultdict
 from datetime import datetime
+from flask_login import UserMixin
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///inventory.db'
@@ -42,10 +43,18 @@ class ProductMovement(db.Model):
     def __repr__(self):
         return '<ProductMovement %r>' % self.movement_id
 
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String, unique=True)
+    password = db.Column(db.String)
+    username = db.Column(db.String)
+    
+
 @app.route('/')
 def home():
     return render_template('home.html')
 
+#Dashboard display
 @app.route('/index', methods=["POST", "GET"])
 def index():
         
@@ -77,6 +86,7 @@ def index():
         locations   = Location.query.order_by(Location.date_created).all()
         return render_template("index.html", products = products, locations = locations)
 
+#Locations page
 @app.route('/locations/', methods=["POST", "GET"])
 def viewLocation():
     if (request.method == "POST") and ('location_name' in request.form):
@@ -95,6 +105,7 @@ def viewLocation():
         locations = Location.query.order_by(Location.date_created).all()
         return render_template("locations.html", locations=locations)
 
+#Products page
 @app.route('/products/', methods=["POST", "GET"])
 def viewProduct():
     if (request.method == "POST") and ('product_name' in request.form):
@@ -113,6 +124,7 @@ def viewProduct():
         products = Product.query.order_by(Product.date_created).all()
         return render_template("products.html", products=products)
 
+#When updating a product
 @app.route("/update-product/<name>", methods=["POST", "GET"])
 def updateProduct(name):
     product = Product.query.get_or_404(name)
@@ -131,6 +143,7 @@ def updateProduct(name):
     else:
         return render_template("update-product.html", product=product)
 
+#Deleting a product
 @app.route("/delete-product/<name>")
 def deleteProduct(name):
     product_to_delete = Product.query.get_or_404(name)
@@ -142,6 +155,7 @@ def deleteProduct(name):
     except:
         return "There was an issue while deleteing the Product"
 
+#Updating a location
 @app.route("/update-location/<name>", methods=["POST", "GET"])
 def updateLocation(name):
     location = Location.query.get_or_404(name)
@@ -161,7 +175,8 @@ def updateLocation(name):
     else:
         return render_template("update-location.html", location=location)
 
-@app.route("/delete-location/<name>")
+#delete location
+@app.route("/delete-location/<int:id>")
 def deleteLocation(id):
     location_to_delete = Location.query.get_or_404(id)
 
@@ -172,6 +187,7 @@ def deleteLocation(id):
     except:
         return "There was an issue while deleteing the Location"
 
+#Handle moving of locations
 @app.route("/movements/", methods=["POST", "GET"])
 def viewMovements():
     if request.method == "POST" :
@@ -203,10 +219,11 @@ def viewMovements():
             ProductMovement.movement_time)\
         .all()
 
-        movements   = ProductMovement.query.order_by(
+        movements  = ProductMovement.query.order_by(
             ProductMovement.movement_time).all()
         return render_template("movements.html", movements=movs, products=products, locations=locations)
 
+#Updating a move
 @app.route("/update-movement/<int:id>", methods=["POST", "GET"])
 def updateMovement(id):
 
@@ -229,6 +246,7 @@ def updateMovement(id):
     else:
         return render_template("update-movement.html", movement=movement, locations=locations, products=products)
 
+#Deleting a movement
 @app.route("/delete-movement/<int:id>")
 def deleteMovement(id):
     movement_to_delete = ProductMovement.query.get_or_404(id)
@@ -240,6 +258,7 @@ def deleteMovement(id):
     except:
         return "There was an issue while deleteing the Prodcut Movement"
 
+#Shows the balance(progucts, their warehouse and quantity in the warehouse)
 @app.route("/product-balance/", methods=["POST", "GET"])
 def productBalanceReport():
     movs = ProductMovement.query.\
