@@ -1,73 +1,113 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"
-import { loginFields } from "../constants/formFields";
-import FormAction from "./FormAction";
-import FormExtra from "./FormExtra";
-import Input from "./Input";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Link, useNavigate } from "react-router-dom";
+// import "./App.js";
 
-const fields = loginFields;
-let fieldsState = {};
-fields.forEach((field) => (fieldsState[field.id] = ""));
+function Login({ onLogin }) {
+  const navigate = useNavigate();
 
-export default function Login() {
-  const navigate = useNavigate()
-  const [loginState, setLoginState] = useState(fieldsState);
-
-  const handleChange = (e) => {
-    setLoginState({ ...loginState, [e.target.id]: e.target.value });
+  const initialValues = {
+    username: "",
+    password: "",
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    authenticateUser();
-  };
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+  });
 
-  //Handle Login API Integration here
-  const authenticateUser = () => {
-    fetch('/login',{
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json',
+  const handleSubmit = (values, { setSubmitting }) => {
+    fetch("http://127.0.0.1:5555/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(loginState),
-    })
-    .then((res) =>{
-      if(res.ok){
-        res.json()
-        .then(user =>{ console.log(`this ${user} exists`)
-        if(user.error){
-          alert('User not found')
-        }else{
-          navigate('/dashboard')
-        }
-      }) 
+      body: JSON.stringify(values),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((user) => {
+          if (user.error) {
+            alert("Invalid username or password!");
+          } else {
+            onLogin(user);
+            console.log(user.email);
+            navigate("/dashboard");
+          }
+        });
       }
-    })
-    
+    });
+    setSubmitting(false);
   };
-
 
   return (
-    <form className="mt-8 space-y-6 justify-center items-center" onSubmit={handleSubmit}>
-      <div className="-space-y-px">
-        {fields.map((field) => (
-          <Input
-            key={field.id}
-            handleChange={handleChange}
-            value={loginState[field.id]}
-            labelText={field.labelText}
-            labelFor={field.labelFor}
-            id={field.id}
-            name={field.name}
-            type={field.type}
-            isRequired={field.isRequired}
-            placeholder={field.placeholder}
-          />
-        ))}
-      </div>
+    <div className="login-container container d-flex align-items-center justify-content-center vh-100">
+      <div className="card">
+        <div className="card-header">Login</div>
+        <div className="card-body">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form className="forms">
+                <div className="input_fields">
+                  <label htmlFor="username" className="form-label">
+                    Username:
+                  </label>
+                  <Field
+                    type="text"
+                    name="username"
+                    className="form-control"
+                    placeholder="Username"
+                  />
+                  <ErrorMessage
+                    name="username"
+                    component="div"
+                    className="error"
+                  />
+                </div>
 
-      <FormExtra />
-      <FormAction handleSubmit={handleSubmit} text="Login" />
-    </form>
+                <div className="input_fields">
+                  <label htmlFor="password" className="form-label">
+                    Password:
+                  </label>
+                  <Field
+                    type="password"
+                    name="password"
+                    className="form-control"
+                    placeholder="Enter your password"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="error"
+                  />
+                </div>
+
+                <div className="form_message">
+                  <p>
+                    Don't have an account?{" "}
+                    <Link className="login_link" to="/signup">
+                      Signup
+                    </Link>
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isSubmitting}
+                >
+                  Login
+                </button>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+    </div>
   );
 }
+
+export default Login;

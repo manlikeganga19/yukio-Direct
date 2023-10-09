@@ -22,20 +22,25 @@ class Index(Resource):
 api.add_resource(Index, '/')
 
 #Authentication
-class Login(Resource):
-  def post(self):
-        data = request.json
-        username = data.get('username')
-        password = data.get('password')
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
 
-        user = User.query.filter_by(username=username).first()
+    if not username or not password:
+        return jsonify({'message': 'Username and password are required'}), 400
 
-        if user and user.check_password(password):
-            session['user_id'] = user.id
-            return make_response(jsonify(user.to_dict()), 201)
-        else:
-            return jsonify({"error": "Invalid credentials"}), 401
-api.add_resource(Login, '/login')
+    user = User.query.filter_by(username=username).first()
+
+
+    if not user or user.password != password:
+        return jsonify({'message': 'Invalid credentials'}), 401
+
+    session['user_id'] = user.id
+
+
+    return jsonify(user.id, {'message': 'Login successful'}), 200
 
 class StayLogged(Resource):
   def get(self):
@@ -55,26 +60,27 @@ class Logout(Resource):
             return jsonify({"error": "User is not logged in"}), 401
 api.add_resource(Logout, '/logout')
 
-class RegisterUser(Resource):
-    def post(self):
-        data = request.get_json()
-        username = data['username']
-        password = data['password']
-        email_address = data['email_address']
+@app.route('/register', methods=['POST'])
+def signup():
+    data = request.get_json()
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    phone_number = data.get('phone_number')
 
-        existing_user = User.query.filter_by(username=username).first()
-        if existing_user:
-            return jsonify({"error": "Username already exists"}), 400
-        
-        new_user = User(username=username,email_address=email_address)
-        new_user.set_password(password)
-        db.session.add(new_user)
-        db.session.commit()
-        
-        session['user_id'] = new_user.id
-        return make_response(jsonify(new_user.to_dict()), 201)
+    if not username or not email or not password:
+        return jsonify({'message': 'Username, email, and password are required'}), 400
 
-api.add_resource(RegisterUser, '/register')
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return jsonify({'message': 'Username already exists'}), 400
+
+    new_user = User(username=username, email=email, password=password, phone_number=phone_number)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'User created successfully'}), 201
 
 # Routes for dashboard navbar
 class Dashboard(Resource):
